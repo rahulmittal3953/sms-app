@@ -3369,7 +3369,8 @@ var UpdateCategoryComponent = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return serviceBaseURL; });
-var serviceBaseURL = "https://ngschooldemo.herokuapp.com"; //"http://localhost:8080";;
+//export const serviceBaseURL: String = "http://localhost:8080";
+var serviceBaseURL = "https://ngschooldemo.herokuapp.com";
 
 
 /***/ }),
