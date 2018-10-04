@@ -2429,7 +2429,30 @@ var GenerateClassFeeComponent = /** @class */ (function () {
         }
     };
     GenerateClassFeeComponent.prototype.closeFee = function (model) {
-        console.log(model);
+        var _this = this;
+        var tempStudentClasses = model.controls.studentClasses.value;
+        var outStudentClasses = [];
+        tempStudentClasses.forEach(function (element) {
+            outStudentClasses.push(element[0]);
+        });
+        this.generateFee.classFee = model.controls.classFee.value;
+        this.generateFee.studentClasses = outStudentClasses;
+        console.log(this.generateFee);
+        this.ngProgress.start();
+        window.scroll(0, 0);
+        // console.log(model);
+        this.classFeeService
+            .closeFee(this.generateFee)
+            .subscribe(function (result) {
+            //this.students = result;
+            console.log(result);
+            _this.ngProgress.done();
+            _this.notif.success("Success", "Closed Fee for the Student successfully.");
+        }, function (error) {
+            console.log(error);
+            _this.ngProgress.done();
+            _this.notif.error("Failure", "While proceesing the Closed Fee for the Student, please try again.");
+        });
     };
     GenerateClassFeeComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -4247,6 +4270,19 @@ var ClassFeeService = /** @class */ (function () {
         return this.http
             .get(this.apiURl + "/api/studentpromoteclass", options)
             .map(function (response) { return response.json(); });
+    };
+    ClassFeeService.prototype.closeFee = function (generateFee) {
+        console.log("we are in the service at closeFee method" + generateFee);
+        console.log(JSON.stringify(generateFee));
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({
+            'Content-Type': 'application/json'
+        });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* RequestOptions */]({ headers: headers });
+        return this.http
+            .post(this.apiURl + "/api/closefee", generateFee, options).map(function (response) {
+            // login successful if there's a jwt token in the response
+            return response.json();
+        });
     };
     ClassFeeService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
